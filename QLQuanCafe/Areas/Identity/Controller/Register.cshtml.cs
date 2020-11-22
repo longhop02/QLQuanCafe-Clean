@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using QLQuanCafe.Areas.Identity.Data;
+using Domain.Entities;
 
 namespace QLQuanCafe.Areas.Identity.Pages.Account
 {

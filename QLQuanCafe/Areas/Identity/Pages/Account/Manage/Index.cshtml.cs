@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using QLQuanCafe.Areas.Identity.Data;
+using Domain.Entities;
 
 namespace QLQuanCafe.Areas.Identity.Pages.Account.Manage
 {

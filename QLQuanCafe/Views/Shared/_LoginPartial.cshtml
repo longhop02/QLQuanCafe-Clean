@@ -1,6 +1,6 @@
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<QLQuanCafe.Areas.Identity.Data.AppUser> SignInManager
-@inject UserManager<QLQuanCafe.Areas.Identity.Data.AppUser> UserManager
+@inject SignInManager<Domain.Entities.AppUser> SignInManager
+@inject UserManager<Domain.Entities.AppUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
