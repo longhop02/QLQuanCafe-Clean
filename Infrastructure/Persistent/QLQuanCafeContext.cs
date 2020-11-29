@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Reflection;
+using Domain.Entities;
 
 namespace Infrastructure.Persistent
 {
-    public class QLQuanCafeContext : IdentityDbContext
+    public class QLQuanCafeContext : IdentityDbContext<AppUser>
     {
         public QLQuanCafeContext(DbContextOptions<QLQuanCafeContext> options) : base(options)
         {

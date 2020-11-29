@@ -36,6 +36,12 @@ namespace QLQuanCafe
             services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<QLQuanCafeContext>();
             services.AddControllersWithViews();
+            services.AddRazorPages().AddRazorPagesOptions(options =>
+            {
+                // options.Conventions.AddAreaPageRoute("Identity","/Account/Login","");
+                // options.Conventions.AuthorizePage("/Account/Manage/Index");
+                // options.Conventions.AuthorizePage("/Home/Index");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +71,9 @@ namespace QLQuanCafe
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                    // endpoints.MapControllerRoute(
+                    // name: "default",
+                    // pattern: "{areas:exists}/{controller=Account}/{action=Login}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

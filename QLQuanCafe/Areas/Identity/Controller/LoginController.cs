@@ -15,6 +15,7 @@ using Domain.Entities;
 
 namespace QLQuanCafe.Areas.Identity.Pages.Account
 {
+    [Area("Account/{controller}")]
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
