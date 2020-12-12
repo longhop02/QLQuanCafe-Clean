@@ -2,10 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Reflection;
 using Domain.Entities;
+using System;
 
 namespace Infrastructure.Persistent
 {
-    public class QLQuanCafeContext : IdentityDbContext<AppUser>
+    public class QLQuanCafeContext : IdentityDbContext<AppUser,AppUserRole,Guid>
     {
         public QLQuanCafeContext(DbContextOptions<QLQuanCafeContext> options) : base(options)
         {
@@ -15,6 +16,7 @@ namespace Infrastructure.Persistent
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
+        public DbSet<AppUserRole> AppUserRoles {get;set;}
 
     }
 }

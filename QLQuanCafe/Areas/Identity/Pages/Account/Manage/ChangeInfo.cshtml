@@ -1,0 +1,12 @@
+@page
+@model ChangeInfoModel
+@{
+    ViewData["Title"] = "Thay đổi thông tin người dùng";
+    ViewData["ActivePage"] = ManageNavPages.ChangeInfo;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

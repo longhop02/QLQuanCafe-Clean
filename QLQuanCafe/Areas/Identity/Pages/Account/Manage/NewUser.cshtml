@@ -1,0 +1,43 @@
+@page
+@model NewUserModel
+@{
+    ViewData["Title"] = "Tạo Người dùng mới";
+    ViewData["ActivePage"] = ManageNavPages.NewUser;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Username"></label>
+                <input asp-for="Input.Username" class="form-control" />
+                <span asp-validation-for="Input.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Roles"></label>
+                <select asp-for="Input.Roles">
+                    <option value="admin">Admin</option>
+                    <option value="quantrivien">Quản trị viên</option>
+                    <option value="nhanvien">Nhân viên</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Tạo mới</button>
+        </form>
+    </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

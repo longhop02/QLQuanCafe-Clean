@@ -33,7 +33,8 @@ namespace QLQuanCafe
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<AppUserRole>()
                 .AddEntityFrameworkStores<QLQuanCafeContext>();
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorPagesOptions(options =>

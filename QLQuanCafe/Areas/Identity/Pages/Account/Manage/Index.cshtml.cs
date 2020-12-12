@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QLQuanCafe.Areas.Identity.Pages.Account.Manage
 {
+    [AllowAnonymous]
     public partial class IndexModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
@@ -28,15 +30,15 @@ namespace QLQuanCafe.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
+        // [BindProperty]
+        // public InputModel Input { get; set; }
 
-        public class InputModel
-        {
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
-        }
+        // public class InputModel
+        // {
+        //     [Phone]
+        //     [Display(Name = "Phone number")]
+        //     public string PhoneNumber { get; set; }
+        // }
 
         private async Task LoadAsync(AppUser user)
         {
@@ -45,10 +47,10 @@ namespace QLQuanCafe.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
 
-            Input = new InputModel
-            {
-                PhoneNumber = phoneNumber
-            };
+            // Input = new InputModel
+            // {
+            //     PhoneNumber = phoneNumber
+            // };
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -77,16 +79,16 @@ namespace QLQuanCafe.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
-            }
+            // var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            // if (Input.PhoneNumber != phoneNumber)
+            // {
+            //     var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+            //     if (!setPhoneResult.Succeeded)
+            //     {
+            //         StatusMessage = "Unexpected error when trying to set phone number.";
+            //         return RedirectToPage();
+            //     }
+            // }
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
