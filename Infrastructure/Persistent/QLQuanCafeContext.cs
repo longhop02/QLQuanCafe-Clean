@@ -17,6 +17,14 @@ namespace Infrastructure.Persistent
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
         public DbSet<AppUserRole> AppUserRoles {get;set;}
+        public DbSet<The> Thes { get; set; }
 
+        public DbSet<NuocUongThe> DSNU { get; set; }
+
+         public DbSet<NuocUong> NUs { get; set; }
+
+         public DbSet<HoaDon> HDs { get; set; }
+
+         public DbSet<ChiTietHoaDon> CTHDs { get; set; }
     }
 }

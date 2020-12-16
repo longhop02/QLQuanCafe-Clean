@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Hoa don";
+}
+<div>
+    <div>
+        <div style="display: inline-block; float: left; margin: 0px;">
+            <label>Sau ngay:</label>
+            <input id="ngayTruoc" type="date">
+        </div>
+        <div style="display: inline-block; float: left; margin: 0px;">
+            <label>Truoc ngay:</label>
+            <input id="ngaySau" type="date">
+        </div>
+        <div style="display: inline-block; float: left; margin: 0px;"><input type="button" value="Tim" onclick="timNgay();"></div>
+    </div>
+    <div id="tbl">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tai khoan</th>
+                    <th>Ngay lap</th>
+                    <th>Tong tien</th>
+                    <th>Giam gia</th>
+                    <th>Thanh tien</th>
+                    <th>Chi tiet</th>
+                </tr>
+            </thead>
+            @foreach (var hd in ViewBag.hds)
+            {
+                <tr>
+                    <td>@hd.TaiKhoan</td>
+                    <td>@hd.NgayLap</td>
+                    <td>@hd.TongTien</td>
+                    <td>@hd.GiamGia</td>
+                    <td>@hd.ThanhTien</td>
+                    <td><a asp-controller="HoaDon" asp-action="ChiTietHoaDon" asp-route-idHD="@hd.Id">Chi tiet</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<script>
+    function timNgay(){
+        var date1 = document.getElementById("ngayTruoc").value;
+        var date2 = document.getElementById("ngaySau").value;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("timHoaDon")",
+            data: {ngayTruoc: date1, ngaySau: date2},
+            dataType: "text",
+            success: function(msg){
+                document.getElementById("tbl").innerHTML=msg;
+            }
+        });
+    }
+</script>

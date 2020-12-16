@@ -13,6 +13,7 @@ using Infrastructure.Persistent;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Domain.Repositories;
 
 namespace QLQuanCafe
 {
@@ -33,7 +34,12 @@ namespace QLQuanCafe
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddDefaultIdentity<AppUser>(options =>
+                 {options.SignIn.RequireConfirmedAccount = false;
+                 options.Password.RequiredUniqueChars = 0;
+                 options.Password.RequireNonAlphanumeric = false;
+                 options.Password.RequireUppercase =false;
+                 })
                 .AddRoles<AppUserRole>()
                 .AddEntityFrameworkStores<QLQuanCafeContext>();
             services.AddControllersWithViews();
@@ -43,6 +49,11 @@ namespace QLQuanCafe
                 // options.Conventions.AuthorizePage("/Account/Manage/Index");
                 // options.Conventions.AuthorizePage("/Home/Index");
             });
+            services.AddScoped<ITheRepository, EFTheRepository>();
+            services.AddScoped<IDSNURepository, EFDSNURepository>();
+            services.AddScoped<INURepository, EFNURepository>();
+            services.AddScoped<IHoaDonRepository, EFHoaDonRepository>();
+            services.AddScoped<ICTHDRepository, EFCTHDRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,9 +83,6 @@ namespace QLQuanCafe
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                    // endpoints.MapControllerRoute(
-                    // name: "default",
-                    // pattern: "{areas:exists}/{controller=Account}/{action=Login}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

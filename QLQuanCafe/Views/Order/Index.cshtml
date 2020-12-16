@@ -1,0 +1,314 @@
+@{
+    ViewData["Title"] = "Order";
+    int tongTien = 0;
+    foreach(var nut1 in ViewBag.dsnu){
+        if(nut1.IdThe == ViewBag.the.Id){
+            tongTien = tongTien + nut1.TongTien;
+        }
+    }
+}
+<div>
+    <div class="row" style="height: 600px;">
+        <div class="col-sm-3" style="border: 1px solid black;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ten the</th>
+                        <th>Trang thai</th>
+                    </tr>
+                </thead>
+                    @foreach (var the in ViewBag.thes)
+                    {
+                        <tr>
+                            <td>@the.TenThe</td>
+                            @if (the.TrangThai == "Trong")
+                            {
+                                <td id="trangThai @the.Id" style="color: green;">@the.TrangThai</td>
+                            }
+                            @if (the.TrangThai == "Nhap nuoc uong")
+                            {
+                                <td id="trangThai @the.Id" style="color: orange;">@the.TrangThai</td>
+                            }
+                            @if (the.TrangThai == "Cho hoan tat")
+                            {
+                                <td id="trangThai @the.Id" style="color: red;">@the.TrangThai</td>
+                            }
+                            <td>
+                                <form asp-action="Index" method="POST">
+                                    <input style="display: none;" name="idThe" type="text" value="@the.Id">
+                                    <input type="submit" value="Chon">
+                                </form>
+                            </td>
+                        </tr>
+                    }
+            </table>
+        </div>
+        <div class="col-sm-5" style="border: 1px solid black;">
+            <div id="tbl" style="border: 1px solid black; height:50%; overflow-y: scroll; overflow-x: scroll;position: absolute;width: 94%;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nuoc uong</th>
+                            <th>So luong</th>
+                            <th>Tong tien</th>
+                        </tr>
+                    </thead>
+                    @{
+                        int donGia = 0;
+                    }
+                    @foreach (var nut in ViewBag.dsnu)
+                    {   
+                        <tr>
+                        @foreach(var nu in ViewBag.nus){
+                            @if(nu.Id == nut.IdNU){
+                                <td>@nu.TenNU</td>
+                                donGia = nu.DonGia;
+                            }
+                        } 
+                            <td>
+                                @if(ViewBag.the.TrangThai == "Cho hoan tat"){
+                                    <input type="button" value="-" onclick="giamSoLuong(@donGia, @nut.Id);" disabled>
+                                    <input id="soLuong @nut.Id" type="text" value="@nut.SoLuong" style="text-align: center; width: 30px;" onchange="tongTien(@donGia, @nut.Id);" disabled>
+                                    <input type="button" value="+" onclick="tangSoLuong(@donGia, @nut.Id);" xuLyTongTien(@ViewBag.the.Id); disabled>
+                                }else{
+                                    <input type="button" value="-" onclick="giamSoLuong(@donGia, @nut.Id);">
+                                    <input id="soLuong @nut.Id" type="text" value="@nut.SoLuong" style="text-align: center; width: 30px;" onchange="tongTien(@donGia, @nut.Id);">
+                                    <input type="button" value="+" onclick="tangSoLuong(@donGia, @nut.Id);">
+                                }
+                            </td>
+                            <td id="tongTien @nut.Id">@nut.TongTien</td>
+                            @if(ViewBag.the.TrangThai == "Cho hoan tat"){
+                                <td><input type="button" value="Xoa" onclick="xoaNU(@ViewBag.the.Id, @nut.Id)" disabled></td>
+                            }else{
+                                <td><input type="button" value="Xoa" onclick="xoaNU(@ViewBag.the.Id, @nut.Id)"></td>
+                            }
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div style="width: 94%; position: absolute; bottom: 0px;">
+                    <div>
+                        The : <span>@ViewBag.the.TenThe</span>
+                    </div>
+                    </br>                   
+                    <div style="display: inline-block; width: 100%;">
+                        <div>Tong tien:</div>
+                        <div style="float: left;display: inline-block;margin: 0px;"><input id="tongTien" type="text" value="@tongTien" disabled></div>
+                        <div style="float: right;display: inline-block;margin-right: 50px;">
+                            @if(ViewBag.the.Id == -1 ){
+                                <input id="mt" type="button" value="Mo the" onclick="doiTrangThai(@ViewBag.the.Id, 1);" disabled>
+                            }else if(ViewBag.the.TrangThai != "Trong"){
+                                 <input id="mt" type="button" value="Mo the" onclick="doiTrangThai(@ViewBag.the.Id, 1);" disabled>
+                            }else{
+                                <input id="mt" type="button" value="Mo the" onclick="doiTrangThai(@ViewBag.the.Id, 1);">
+                            }
+                        </div>
+                    </div>
+                    </br>
+                    <div style="display: inline-block; width: 100%;">
+                        <div>Giam gia:</div>
+                        <div style="float: left;display: inline-block;margin: 0px;"><input id="giamGia" type="text" onchange="xuLyTongTien(@ViewBag.the.Id);"></div>
+                        <div style="float: right;display: inline-block;margin-right: 50px;">
+                            @if(ViewBag.the.Id == -1 ){
+                                <input id="tt" type="button" value="Thanh toan" onclick="doiTrangThai(@ViewBag.the.Id, 2); xuLyTongTien(@ViewBag.the.Id);" disabled>
+                            }else if(ViewBag.the.TrangThai != "Nhap nuoc uong"){
+                                <input id="tt" type="button" value="Thanh toan" onclick="doiTrangThai(@ViewBag.the.Id, 2); xuLyTongTien(@ViewBag.the.Id);" disabled>
+                            }else{
+                                <input id="tt" type="button" value="Thanh toan" onclick="doiTrangThai(@ViewBag.the.Id, 2); xuLyTongTien(@ViewBag.the.Id);">
+                            }
+                        </div>
+                    </div>
+                    </br>
+                    <div style="display: inline-block; width: 100%;">
+                        <div>Thanh tien:</div>
+                        <div style="float: left;display: inline-block;margin: 0px;"><input id="thanhTien" type="text" value="@tongTien" disabled></div>
+                        <div style="float: right;display: inline-block;margin-right: 50px;">
+                             @if(ViewBag.the.Id == -1 ){
+                                <input id="ht" type="button" value="Hoan tat" onclick="doiTrangThai(@ViewBag.the.Id, 3); xuLyHoanTat(@ViewBag.the.Id);" disabled>
+                            }else if(ViewBag.the.TrangThai != "Cho hoan tat"){
+                                <input id="ht" type="button" value="Hoan tat" onclick="doiTrangThai(@ViewBag.the.Id, 3); xuLyHoanTat(@ViewBag.the.Id);" disabled>
+                            }else{
+                                <input id="ht" type="button" value="Hoan tat" onclick="doiTrangThai(@ViewBag.the.Id, 3); xuLyHoanTat(@ViewBag.the.Id);">
+                            }
+                        </div>  
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <div class="order-button-left" style="float: left;display: inline-block;margin-left: 200px;">
+                            @if (ViewBag.the.TrangThai == "" || ViewBag.the.TrangThai == "Trong"){
+                                <input id="huy" type="button" value="Huy" onclick="doiTrangThai(@ViewBag.the.Id, 4);" disabled>
+                            }else{
+                                <input id="huy" type="button" value="Huy" onclick="doiTrangThai(@ViewBag.the.Id, 4);">
+                            }
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div id="tbl1" class="col-sm-4" style="border: 1px solid black;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ten nuoc uong</th>
+                        <th>Don gia</th>
+                    </tr>
+                </thead>
+                @foreach (var nu in ViewBag.nus)
+                {
+                    <tr>
+                        <td>@nu.TenNU</td>
+                        <td>@nu.DonGia</td>
+                        <td>
+                            @if (@ViewBag.the.TrangThai == "Nhap nuoc uong")
+                            {
+                                <input id="them @nu.Id" type="button" value="Them" onclick="themNuocUong(@nu.Id, @ViewBag.the.Id);">
+                            }else{
+                                <input id="them @nu.Id" type="button" value="Them" onclick="themNuocUong(@nu.Id, @ViewBag.the.Id);" disabled>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function xuLyHoanTat(idthe){
+        var tongtien = document.getElementById("tongTien").value;
+        var giamgia = document.getElementById("giamGia").value;
+        var thanhtien = document.getElementById("thanhTien").value;
+        if(tongtien != 0){
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("taoHoaDon")",
+                data: {idThe: idthe, tongTien: tongtien, giamGia: giamgia, thanhTien: thanhtien},
+                dataType: "text",
+                success: function(msg){
+                    document.getElementById("tbl").innerHTML=msg;
+                }
+            });
+        }
+    }
+    function xuLyTongTien(idthe){
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("xuLyTongTien")",
+            data: {idThe: idthe},
+            dataType: "text",
+            success: function(msg){               
+                document.getElementById("tongTien").value=msg;
+                var gg = document.getElementById("giamGia").value;
+                var tt = msg - gg;
+                document.getElementById("thanhTien").value=tt;
+            }
+        });
+    }
+    function xoaNU(idthe, idnut){       
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("xuLyXoaNU")",
+            data: {idThe: idthe, idNUT: idnut},
+            dataType: "text",
+            success: function(msg){               
+                document.getElementById("tbl").innerHTML=msg;
+            }
+        });
+    }
+    function themNuocUong(idnu, idthe){
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("xuLyThemNuocUong")",
+            data: {idNU: idnu, idThe: idthe},
+            dataType: "text",
+            success: function(msg){
+                document.getElementById("tbl").innerHTML=msg;               
+            }
+        });
+    }
+    function doiTrangThai(id, tt){
+        var trTh;
+        if(tt==1){
+            trTh = "Trong";
+            document.getElementById("trangThai "+id).style.color="orange";
+            document.getElementById("mt").disabled=true;
+            document.getElementById("tt").disabled=false;
+            document.getElementById("huy").disabled=false;          
+        }
+        else if(tt==2){
+            trTh = "Nhap nuoc uong";
+            document.getElementById("trangThai "+id).style.color="red";
+            document.getElementById("tt").disabled=true;
+            document.getElementById("ht").disabled=false;
+        }
+        else if(tt==3){
+            var tongTien = document.getElementById("tongTien").value;
+            if(tongTien==0){
+                tt=4;
+                trTh = "Huy";
+                document.getElementById("trangThai "+id).style.color="green";
+                document.getElementById("tt").disabled=true;
+                document.getElementById("ht").disabled=true;
+                document.getElementById("mt").disabled=false;
+                document.getElementById("huy").disabled=true; 
+            }else{
+                trTh = "Cho hoan tat";
+                document.getElementById("trangThai "+id).style.color="green";
+                document.getElementById("ht").disabled=true;
+                document.getElementById("mt").disabled=false;
+                document.getElementById("huy").disabled=true; 
+            }
+        }
+        else if(tt==4){
+            trTh = "Huy";
+            document.getElementById("trangThai "+id).style.color="green";
+            document.getElementById("tt").disabled=true;
+            document.getElementById("ht").disabled=true;
+            document.getElementById("mt").disabled=false;
+            document.getElementById("huy").disabled=true; 
+        }
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("xuLyTrangThai")",
+            data: {idThe: id, trangThai: trTh},
+            dataType: "text",
+            success: function(msg){
+                var res = msg.split("|");
+                document.getElementById("trangThai "+id).innerHTML=res[0];
+                if(tt == 2){
+                    document.getElementById("tbl").innerHTML=res[1];
+                    document.getElementById("tbl1").innerHTML=res[2];
+                }else if(tt == 1){
+                    document.getElementById("tbl1").innerHTML=res[2];
+                }else if(tt == 4){
+                    document.getElementById("tbl").innerHTML=res[1];
+                    document.getElementById("tbl1").innerHTML=res[2];
+                }
+            }
+        });
+    }
+    function tongTien(donGia, nutId){
+        var sl = document.getElementById("soLuong "+nutId).value;
+        var tongTien = sl*donGia;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("xuLySoLuong")",
+            data: {idNUT: nutId, soLuong: sl},
+            dataType: "text",
+            success: function(msg){
+                document.getElementById("tongTien "+nutId).innerHTML=msg;
+            }
+        });
+    }
+    function tangSoLuong(donGia, nutId){
+        var soLuong = document.getElementById("soLuong "+nutId).value;
+        soLuong = parseInt(soLuong) + 1;
+        document.getElementById("soLuong "+nutId).value=soLuong;
+        tongTien(donGia, nutId);
+    }
+    function giamSoLuong(donGia, nutId){
+        var soLuong = document.getElementById("soLuong "+nutId).value;
+        if(soLuong!=0){
+            soLuong = parseInt(soLuong) - 1;
+        }
+        document.getElementById("soLuong "+nutId).value=soLuong;
+        tongTien(donGia, nutId);
+    }
+</script>

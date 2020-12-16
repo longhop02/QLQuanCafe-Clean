@@ -3,14 +3,16 @@ using System;
 using Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(QLQuanCafeContext))]
-    partial class QLQuanCafeContextModelSnapshot : ModelSnapshot
+    [Migration("20201216002345_ThucUongVaThe")]
+    partial class ThucUongVaThe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,59 +110,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ChiTietHoaDon", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("IdHD")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("IdNU")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SoLuong")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TongTien")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CTHDs");
-                });
-
-            modelBuilder.Entity("Domain.Entities.HoaDon", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("GiamGia")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("NgayLap")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TaiKhoan")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("ThanhTien")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TongTien")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TrangThai")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HDs");
-                });
-
             modelBuilder.Entity("Domain.Entities.NuocUong", b =>
                 {
                     b.Property<int>("Id")
@@ -220,7 +169,7 @@ namespace Infrastructure.Migrations
 
                     b.ToTable("Thes");
                 });
-
+                
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")

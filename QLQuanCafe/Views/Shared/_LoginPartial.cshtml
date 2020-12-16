@@ -1,10 +1,17 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<Domain.Entities.AppUser> SignInManager
 @inject UserManager<Domain.Entities.AppUser> UserManager
-
-<ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Order</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="HoaDon" asp-action="Index">Hoa Don</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav">
     <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
     </li>
@@ -13,14 +20,16 @@
             <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
         </form>
     </li>
+    </ul>
 }
 else
 {
+    <ul class="navbar-nav">
     @* <li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li> *@
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
+    </ul>
 }
-</ul>

@@ -3,14 +3,16 @@ using System;
 using Infrastructure.Persistent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(QLQuanCafeContext))]
-    partial class QLQuanCafeContextModelSnapshot : ModelSnapshot
+    [Migration("20201216101504_QLQuanCafe")]
+    partial class QLQuanCafe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

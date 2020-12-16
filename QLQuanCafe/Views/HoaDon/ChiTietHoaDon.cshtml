@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "Chi tiet hoa don";
+}
+<div>
+    <table>
+        <tr>
+            <td style="padding-top: 40px;"><b>Tai khoan:</b></td>
+            <td style="padding-top: 40px;">@ViewBag.hd.TaiKhoan</td>
+        </tr>
+        <tr>
+            <td style="padding-top: 40px;"><b>Tai khoan:</b></td>
+            <td style="padding-top: 40px;">@ViewBag.hd.NgayLap</td>
+        </tr>
+        <tr>
+            <td style="padding-top: 40px;"><b>Danh sach nuoc uong:</b></td>
+        </tr>
+        <tr>
+            <td style="padding-top: 40px;">
+                <table>
+                    @foreach (var cthd in ViewBag.cthds)
+                    {
+                        @if(cthd.IdHD == ViewBag.hd.Id){
+                            <tr>
+                                @foreach (var nu in ViewBag.nus)
+                                {
+                                    @if(cthd.IdNU == nu.Id){
+                                        <td style="padding: 10px;">@nu.TenNU</td>
+                                        <td style="padding: 10px;">@nu.DonGia</td>
+                                    }   
+                                }
+                                <td style="padding: 10px;">@cthd.SoLuong</td>
+                                <td style="padding: 10px;">@cthd.TongTien</td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 40px;"><b>Tong tien:</b></td>
+            <td style="padding-top: 40px;">@ViewBag.hd.TongTien</td>
+        </tr>
+        <tr>
+            <td style="padding-top: 40px;"><b>Giam gia:</b></td>
+            <td style="padding-top: 40px;">@ViewBag.hd.GiamGia</td>
+        </tr>
+        <tr>
+            <td style="padding-top: 40px;"><b>Thanh tien:</b></td>
+            <td style="padding-top: 40px;">@ViewBag.hd.ThanhTien</td>
+        </tr>
+    </table>
+</div>
