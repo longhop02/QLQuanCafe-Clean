@@ -1,0 +1,66 @@
+@model QLQuanCafe.ViewModels.NuocUongViewModel
+
+@{
+    ViewData["Title"] = "Product List";
+    var idSort = (Model.SortOrder == "id") ? "id_desc" : "idName";
+    var TenNUSort = (Model.SortOrder == "TenNU") ? "TenNU_desc" : "TenNU";
+    var donGiaSort = (Model.SortOrder == "donGia_desc") ? "donGia" : "donGia_desc";
+}
+
+<h1>Product Manager</h1>
+
+<form method="GET">
+    <p>        
+        <input type="text" asp-for="SearchString"/>
+        <input type="submit" value="Search"/>
+    </p>
+</form>
+
+<p>
+    <a asp-action="Create">Create new</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th><a  asp-route-sortOrder="@idSort"
+                    asp-route-searchString="@Model.SearchString">
+                @Html.DisplayNameFor(model =>  model.NuocUongs[0].Id)</a></th>
+            <th><a  asp-route-sortOrder="@TenNUSort"
+                    asp-route-searchString="@Model.SearchString">
+                @Html.DisplayNameFor(model =>  model.NuocUongs[0].TenNU)</a></th>
+            <th><a  asp-route-sortOrder="@donGiaSort"
+                    asp-route-searchString="@Model.SearchString">
+                @Html.DisplayNameFor(model => model.NuocUongs[0].DonGia)</a></th>            
+                 
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var nuocUong in Model.NuocUongs)
+    {
+        <tr>
+            <td>@nuocUong.Id</td>
+            <td>@nuocUong.TenNU</td>
+            <td>@nuocUong.DonGia</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@nuocUong.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@nuocUong.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@nuocUong.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.NuocUongs.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.NuocUongs.HasNextPage ? "disabled" : "";
+}
+
+<a  class="btn btn-default @prevDisabled"
+    asp-route-searchString="@Model.SearchString"
+    asp-route-pageIndex="@(Model.NuocUongs.PageIndex -1)">Previous</a>
+<a  class="btn btn-default @nextDisabled"
+    asp-route-searchString="@Model.SearchString"
+    asp-route-pageIndex="@(Model.NuocUongs.PageIndex +1)">Next</a>

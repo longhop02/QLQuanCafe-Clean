@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Domain.Repositories;
+using Application.Interfaces;
+using Application.Services;
 
 namespace QLQuanCafe
 {
@@ -54,6 +56,13 @@ namespace QLQuanCafe
             services.AddScoped<INURepository, EFNURepository>();
             services.AddScoped<IHoaDonRepository, EFHoaDonRepository>();
             services.AddScoped<ICTHDRepository, EFCTHDRepository>();
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
+            services.AddScoped<IIngredientService, IngredientService>();
+            services.AddScoped<INuocUongRepository, NuocUongRepository>();
+            services.AddScoped<INuocUongService, NuocUongService>();
+
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ICustomerService, CustomerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

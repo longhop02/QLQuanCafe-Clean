@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Reflection;
 using Domain.Entities;
+using Domain.Entities.CustomerAggregate;
 using System;
 
 namespace Infrastructure.Persistent
@@ -26,5 +27,8 @@ namespace Infrastructure.Persistent
          public DbSet<HoaDon> HDs { get; set; }
 
          public DbSet<ChiTietHoaDon> CTHDs { get; set; }
+
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Customer> Customers { get; set; }
     }
 }

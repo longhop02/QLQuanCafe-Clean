@@ -4,7 +4,7 @@ using Domain.Entities;
 
 namespace Domain.Repositories
 {
-    public interface INURepository
+    public interface INURepository 
     {
          IEnumerable<NuocUong> GetAll();
 

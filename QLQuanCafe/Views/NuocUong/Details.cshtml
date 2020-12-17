@@ -1,0 +1,24 @@
+@model Application.DTOs.NuocUongDto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Customer</h4>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Id)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => Model.Id)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.TenNU)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => Model.TenNU)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.DonGia)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => Model.DonGia)</dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to list</a>
+</div>

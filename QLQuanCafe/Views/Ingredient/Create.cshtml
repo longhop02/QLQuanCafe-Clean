@@ -1,0 +1,57 @@
+@model Application.DTOs.IngredientDto
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+<h4>Ingredient</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form method="POST">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IngredientName" class="control-label"></label>
+                <input asp-for="IngredientName" class="form-control"/>
+                <span asp-validation-for="IngredientName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IngredientSupplier" class="control-label"></label>
+                <input asp-for="IngredientSupplier" class="form-control"/>
+                <span asp-validation-for="IngredientSupplier" class="text-danger"></span>
+            </div>           
+            <div class="form-group">
+                <label asp-for="IngredientPrice" class="control-label"></label> (VND)
+                <input asp-for="IngredientPrice" class="form-control"/>
+                <span asp-validation-for="IngredientPrice" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="IngredientUnit" class="control-label"></label>
+                <input asp-for="IngredientUnit" class="form-control"/>
+                <span asp-validation-for="IngredientUnit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IngredientQuantity" class="control-label"></label>
+                <input asp-for="IngredientQuantity" class="form-control" value="0" readonly="readonly"/>
+                <span asp-validation-for="IngredientQuantity" class="text-danger" ></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IngredientType" class="control-label"></label>
+                <input asp-for="IngredientType" class="form-control"/>
+                <span asp-validation-for="IngredientType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

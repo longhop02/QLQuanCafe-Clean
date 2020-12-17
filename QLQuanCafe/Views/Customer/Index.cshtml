@@ -1,0 +1,74 @@
+@model QLQuanCafe.ViewModels.CustomerViewModel
+
+@{
+    ViewData["Title"] = "Customer List";
+    var customerNameSort = (Model.SortOrder == "customerName") ? "customerName_desc" : "customerName";
+    var customerPhoneNumberSort = (Model.SortOrder == "customerPhoneNumber") ? "customerPhoneNumber_desc" : "customerPhoneNumber";
+    var customerAddressSort = (Model.SortOrder == "customerAddress_desc") ? "customerAddress" : "customerAddress_desc";
+    var customerEmailSort = (Model.SortOrder == "customerEmail_desc") ? "customerEmail" : "customerEmail_desc";
+}
+
+<h1>Customer Manager</h1>
+
+<form method="GET">
+    <p>        
+        <input type="text" asp-for="SearchString"/>
+        <input type="submit" value="Search"/>
+    </p>
+</form>
+
+<p>
+    <a asp-action="Create">Create new</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Customers[0].Id)</a></th>
+            <th><a  asp-route-sortOrder="@customerNameSort"
+                    asp-route-searchString="@Model.SearchString">
+                @Html.DisplayNameFor(model => model.Customers[0].CustomerName)</a></th>
+            <th><a  asp-route-sortOrder="@customerPhoneNumberSort"
+                    asp-route-searchString="@Model.SearchString">
+                @Html.DisplayNameFor(model => model.Customers[0].CustomerPhoneNumber)</a></th>            
+            <th><a  asp-route-sortOrder="@customerAddressSort"
+                    asp-route-searchString="@Model.SearchString">
+                @Html.DisplayNameFor(model => model.Customers[0].CustomerAddress)</a></th>
+            <th><a  asp-route-sortOrder="@customerEmailSort"
+                    asp-route-searchString="@Model.SearchString">
+                @Html.DisplayNameFor(model => model.Customers[0].CustomerEmail)</a></th>
+                 
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var customer in Model.Customers)
+    {
+        <tr>
+            <td>@customer.Id</td>
+            <td>@customer.CustomerName</td>
+            <td>@customer.CustomerPhoneNumber</td>
+            <td>@customer.CustomerAddress</td>
+            <td>@customer.CustomerEmail</td> 
+            <td>
+                <a asp-action="Edit" asp-route-id="@customer.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@customer.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@customer.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.Customers.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Customers.HasNextPage ? "disabled" : "";
+}
+
+<a  class="btn btn-default @prevDisabled"
+    asp-route-searchString="@Model.SearchString"
+    asp-route-pageIndex="@(Model.Customers.PageIndex -1)">Previous</a>
+<a  class="btn btn-default @nextDisabled"
+    asp-route-searchString="@Model.SearchString"
+    asp-route-pageIndex="@(Model.Customers.PageIndex +1)">Next</a>
